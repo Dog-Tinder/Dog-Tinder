@@ -33,6 +33,11 @@ class App extends Component {
               ]
             }
           }
+    addAnimal = (info) => {
+        console.log(info)
+    }
+
+
     render() {
         console.log(this.state.dogs)
         return (
@@ -42,7 +47,7 @@ class App extends Component {
                     <Switch>
                         <Route exact path="/" component={Home} />
                         <Route exact path="/dogs/" render={(props) => <Dogs dogs={this.state.dogs}/> } />
-                        <Route exact path="/newdog" component={NewDog} />
+                        <Route exact path="/newdog" render={(props) => < NewDog addAnimal = {this.addAnimal}/>} />
                     </Switch>
                 </div>
         </Router>

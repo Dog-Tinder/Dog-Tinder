@@ -9,7 +9,7 @@ class NewDog extends Component {
         return (
             <div>
             <h1>Enter Dog's Info</h1>
-                <Form />
+                <Form addAnimal= {this.props.addAnimal}/>
             </div>
         );
     }

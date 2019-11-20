@@ -24,45 +24,40 @@ class Form extends Component {
 // this handleclick  update the state of the form. Then push information into the dogs state array
 // eventually being able to display on Dog Community
 
-    handleSubmit = (e) => {
-        const {form} = this.state;
+    handleChange = (e) => {
+        const {form} = this.state
+        form[e.target.name] = e.target.value
+        this.setState({form: form})
     }
 
-    addAnimal
+    handleSubmit = () => {
+        this.props.addAnimal(this.state.form)
+    }
 
     render() {
         return (
             <div>
-            <form>
+
             <div class="form-group">
               <label class="col-form-label" for="inputDefault">Dog Name:</label>
-              <input type="text" class="form-control" placeholder="Dog Name" id="name" />
+              <input type="text" class="form-control" placeholder="Dog Name" id="name" name="name" onChange= {this.handleChange}/>
             </div>
 
             <div class="form-group">
-             <label for="exampleSelect1">Age:</label>
-             <select class="form-control" id="exampleSelect1">
+             <label for="age">Age:</label>
+             <select class="form-control" id="age" name="age" onChange= {this.handleChange} >
                 {this.arr}
             </select>
            </div>
 
             <div class="form-group">
                 <label for="Enjoys">Enjoys:</label>
-                <textarea class="form-control" placeholder="What Does the Dog Enjoy? Favorite Foods... Favorite Toys... etc" id="Description" rows="3"></textarea>
+                <textarea class="form-control" placeholder="What Does the Dog Enjoy? Favorite Foods... Favorite Toys... etc" id="Description" rows="3" name="enjoys" onChange= {this.handleChange} >
+                </textarea>
+
             </div>
 
-            <div class="form-group">
-            <label for="exampleInputFile">Upload Photo:</label>
-            <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
-            <small id="fileHelp" class="form-text text-muted">Upload a photo of the dog</small>
-            </div>
-
-            <button onClick={this.handleSubmit} type="submit" class="btn btn-primary">Submit</button>
-
-            </form>
-
-
-
+            <button onClick={this.handleSubmit} class="btn btn-primary">Submit</button>
 
             </div>
         );
