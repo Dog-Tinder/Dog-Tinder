@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 
 class Form extends Component {
     constructor(props) {
         super(props)
-        this.arr = []
+        this.arr = [<option key={0}>{'Select'}</option>]
         this.createArr()
         this.state = {
             form: {
@@ -18,7 +18,7 @@ class Form extends Component {
 
     createArr = () => {
         for(let i = 0; i <=20; i++){
-            this.arr.push(<option>{i}</option>)
+            this.arr.push(<option key={i+1}>{i}</option>)
         }
     }
 // this handleclick  update the state of the form. Then push information into the dogs state array
@@ -31,34 +31,37 @@ class Form extends Component {
     }
 
     handleSubmit = () => {
-        this.props.addAnimal(this.state.form)
+        this.props.handleNewDog(this.state.form)
     }
 
     render() {
         return (
             <div>
 
-            <div class="form-group">
-              <label class="col-form-label" for="inputDefault">Dog Name:</label>
-              <input type="text" class="form-control" placeholder="Dog Name" id="name" name="name" onChange= {this.handleChange}/>
-            </div>
+                <div className="form-group">
+                  <label className="col-form-label">Dog Name:</label>
+                  <input type="text" className="form-control" placeholder="Dog Name" id="name" name="name" onChange= {this.handleChange}/>
+                </div>
 
-            <div class="form-group">
-             <label for="age">Age:</label>
-             <select class="form-control" id="age" name="age" onChange= {this.handleChange} >
-                {this.arr}
-            </select>
-           </div>
+                <div className="form-group">
+                 <label>Age:</label>
+                 <select className="form-control" id="age" name="age" onChange= {this.handleChange} >
+                    {this.arr}
+                </select>
+               </div>
 
-            <div class="form-group">
-                <label for="Enjoys">Enjoys:</label>
-                <textarea class="form-control" placeholder="What Does the Dog Enjoy? Favorite Foods... Favorite Toys... etc" id="Description" rows="3" name="enjoys" onChange= {this.handleChange} >
-                </textarea>
+                <div className="form-group">
+                    <label>Enjoys:</label>
+                    <textarea className="form-control" placeholder="What Does the Dog Enjoy? Favorite Foods... Favorite Toys... etc" id="Description" rows="3" name="enjoys" onChange= {this.handleChange} >
+                    </textarea>
 
-            </div>
+                </div>
 
-            <button onClick={this.handleSubmit} class="btn btn-primary">Submit</button>
+                <button onClick={this.handleSubmit} className="btn btn-primary">Submit</button>
 
+                	{this.props.success &&
+            		<Redirect to="/dogs/" />
+                }
             </div>
         );
     }
