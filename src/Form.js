@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
+import {createDog} from './api'
 
 
 class Form extends Component {
@@ -12,7 +13,8 @@ class Form extends Component {
                 name: '',
                 age: '',
                 enjoys: ''
-        }
+            },
+            success: false
         }
     }
 
@@ -31,7 +33,16 @@ class Form extends Component {
     }
 
     handleSubmit = () => {
-        this.props.handleNewDog(this.state.form)
+        this.handleNewDog(this.state.form)
+    }
+
+    handleNewDog = (newDogInfo) => {
+        createDog(newDogInfo)
+            .then(successDog => {
+            this.setState({success:true})
+            console.log("SUCCESS! New dog: ", successDog);
+            this.props.getDogsLocal()
+        })
     }
 
     render() {
@@ -59,9 +70,7 @@ class Form extends Component {
 
                 <button onClick={this.handleSubmit} className="btn btn-primary">Submit</button>
 
-                	{this.props.success &&
-            		<Redirect to="/dogs/" />
-                }
+                {this.state.success && <Redirect to="/dogs/" /> }
             </div>
         );
     }
