@@ -20,6 +20,7 @@ loadDog = () => {
 
   handleSubmit = (dog)=>{
     this.setState({ dog })
+    this.props.getDogsLocal()
   }
 
   render () {

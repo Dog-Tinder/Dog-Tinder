@@ -18,6 +18,8 @@ class Dogs extends Component {
                     return (
                 <ListGroup.Item key={index}>
                     <Link to = {`/dogupdate/${dog.id}`}>Add photo</Link>
+
+                    {dog.photo_url && <img src={dog.photo_url} />}
                     <h4>
                     <span className='dog-name'>{dog.name}</span> - <small className='dog-age'>{dog.age} years old</small>
                     </h4>
