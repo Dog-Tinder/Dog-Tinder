@@ -7,6 +7,7 @@ import Dogs from './pages/Dogs';
 import NewDog from './pages/NewDog';
 import "bootswatch/dist/sketchy/bootstrap.min.css";
 import {getDogs} from './api'
+import DogUpdate from './pages/DogUpdate'
 
 
 
@@ -44,6 +45,7 @@ class App extends Component {
                         <Route exact path="/" component={Home} />
                         <Route exact path="/dogs/" render={(props) => <Dogs dogs={this.state.dogs}/> } />
                         <Route exact path="/newdog" render={(props) => < NewDog getDogsLocal = {this.getDogsLocal} />} />
+                        <Route exact path="/dogupdate/:id" render={(props) => < DogUpdate {...props} getDogsLocal = {this.getDogsLocal} />} />
                     </Switch>
                 </div>
         </Router>

@@ -7,9 +7,6 @@ let getDogs = function() {
         return json
     })
 }
-export {
-    getDogs
-}
 
 
 let createDog = function(dog) {
@@ -27,6 +24,15 @@ let createDog = function(dog) {
 		})
 }
 
+let getDog = function(id) {
+    return fetch(BASE + `/dogs/${id}`)
+    .then((resp) => {
+        let json = resp.json()
+        return json
+    })
+}
+
+
 export {
-    createDog
+    createDog, getDogs, getDog
 }

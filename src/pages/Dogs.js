@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Col, Container, Row, ListGroup
 } from 'react-bootstrap'
+import {Link} from 'react-router-dom'
 
 
 class Dogs extends Component {
@@ -16,6 +17,7 @@ class Dogs extends Component {
                     {this.props.dogs.map((dog, index) =>{
                     return (
                 <ListGroup.Item key={index}>
+                    <Link to = {`/dogupdate/${dog.id}`}>Add photo</Link>
                     <h4>
                     <span className='dog-name'>{dog.name}</span> - <small className='dog-age'>{dog.age} years old</small>
                     </h4>
