@@ -1,69 +1,76 @@
 import React, {Component} from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
+import {createDog} from './api'
 
 
 class Form extends Component {
     constructor(props) {
         super(props)
-        this.arr = []
+        this.arr = [<option key={0}>{'Select'}</option>]
         this.createArr()
         this.state = {
             form: {
                 name: '',
                 age: '',
                 enjoys: ''
-        }
+            },
+            success: false
         }
     }
 
     createArr = () => {
         for(let i = 0; i <=20; i++){
-            this.arr.push(<option>{i}</option>)
+            this.arr.push(<option key={i+1}>{i}</option>)
         }
     }
 // this handleclick  update the state of the form. Then push information into the dogs state array
 // eventually being able to display on Dog Community
 
-    handleSubmit = (e) => {
-        const {form} = this.state;
+    handleChange = (e) => {
+        const {form} = this.state
+        form[e.target.name] = e.target.value
+        this.setState({form: form})
     }
 
-    addAnimal
+    handleSubmit = () => {
+        this.handleNewDog(this.state.form)
+    }
+
+    handleNewDog = (newDogInfo) => {
+        createDog(newDogInfo)
+            .then(successDog => {
+            this.setState({success:true})
+            console.log("SUCCESS! New dog: ", successDog);
+            this.props.getDogsLocal()
+        })
+    }
 
     render() {
         return (
             <div>
-            <form>
-            <div class="form-group">
-              <label class="col-form-label" for="inputDefault">Dog Name:</label>
-              <input type="text" class="form-control" placeholder="Dog Name" id="name" />
-            </div>
 
-            <div class="form-group">
-             <label for="exampleSelect1">Age:</label>
-             <select class="form-control" id="exampleSelect1">
-                {this.arr}
-            </select>
-           </div>
+                <div className="form-group">
+                  <label className="col-form-label">Dog Name:</label>
+                  <input type="text" className="form-control" placeholder="Dog Name" id="name" name="name" onChange= {this.handleChange}/>
+                </div>
 
-            <div class="form-group">
-                <label for="Enjoys">Enjoys:</label>
-                <textarea class="form-control" placeholder="What Does the Dog Enjoy? Favorite Foods... Favorite Toys... etc" id="Description" rows="3"></textarea>
-            </div>
+                <div className="form-group">
+                 <label>Age:</label>
+                 <select className="form-control" id="age" name="age" onChange= {this.handleChange} >
+                    {this.arr}
+                </select>
+               </div>
 
-            <div class="form-group">
-            <label for="exampleInputFile">Upload Photo:</label>
-            <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
-            <small id="fileHelp" class="form-text text-muted">Upload a photo of the dog</small>
-            </div>
+                <div className="form-group">
+                    <label>Enjoys:</label>
+                    <textarea className="form-control" placeholder="What Does the Dog Enjoy? Favorite Foods... Favorite Toys... etc" id="Description" rows="3" name="enjoys" onChange= {this.handleChange} >
+                    </textarea>
 
-            <button onClick={this.handleSubmit} type="submit" class="btn btn-primary">Submit</button>
+                </div>
 
-            </form>
+                <button onClick={this.handleSubmit} className="btn btn-primary">Submit</button>
 
-
-
-
+                {this.state.success && <Redirect to="/dogs/" /> }
             </div>
         );
     }
